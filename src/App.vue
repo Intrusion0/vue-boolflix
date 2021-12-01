@@ -3,10 +3,11 @@
     <!-- Componente Header -->
     <Header
     @valueText="movieSearch"
+    @valueTextSeries="seriesTvSearch"
     />
     <!-- Componente Main -->
     <Main
-    :cards="cards"
+    :filmsAndSeries="getAllRes"
     />
   </div>
 </template>
@@ -24,21 +25,39 @@ export default {
   },
   data() {
     return {
-      apiUrl: 'https://api.themoviedb.org/3/search/movie?api_key=',
-      apiKeys: 'c4d909d32f7d67d5875e76a887f02111',
+      apiUrl: 'https://api.themoviedb.org/3/search/',
+      apiKeys: '?api_key=c4d909d32f7d67d5875e76a887f02111',
       apiLanguage: '&language=it-IT',
-      apiPage: '&page=1',
-      cards: [],
+      apiPage: '&page=1', // potrei gestire le pagine! ogni pagina contiene solo 20 cards. Siccome di default è 1, in pagina visualizzerò massimo 20 cards
+      films: [],
+      series: []
+    }
+  },
+  computed: {
+    getAllRes() {
+      return [...this.series, ...this.films]
     }
   },
   methods: {
-    movieSearch(value) {
+    movieSearch(nameFilm) {
         axios
-        .get(this.apiUrl + this.apiKeys + this.apiLanguage + this.apiPage + '&query=' + value)
+        .get(this.apiUrl + 'movie' + this.apiKeys + this.apiLanguage + this.apiPage + '&query=' + nameFilm)
         .then((result) => {
-            this.cards = result.data.results
-            console.log(this.cards);
-            console.log(value);
+            this.films = result.data.results
+            console.log(this.films);
+            console.log(nameFilm);
+        })
+        .catch((error) => {
+            console.log('Alert! ' + error);
+        })
+    },
+    seriesTvSearch(nameSerie) {
+      axios
+        .get(this.apiUrl + 'tv' + this.apiKeys + this.apiLanguage + this.apiPage + '&query=' + nameSerie)
+        .then((result) => {
+            this.series = result.data.results
+            console.log(this.series);
+            console.log(nameSerie);
         })
         .catch((error) => {
             console.log('Alert! ' + error);

@@ -24,6 +24,7 @@ export default {
             if (this.searchText.trim().toLowerCase() !== '') {
                 searchTextActual = this.searchText.trim().toLowerCase();
                 this.$emit('valueText', searchTextActual);
+                this.$emit('valueTextSeries', searchTextActual);
             }
         }
     }

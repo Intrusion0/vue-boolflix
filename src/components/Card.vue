@@ -3,19 +3,31 @@
       <div>
           Titolo:
           <span>
-              {{ details.title }}
+              {{ details.title || details.name }}
           </span>
       </div>
       <div>
           Titolo originale:
           <span>
-              {{ details.original_title }}
+              {{ details.original_title || details.original_name }}
           </span>
       </div>
       <div>
           Lingua:
-          <span>
-              {{ details.original_language }}
+          <span v-if="details.original_language == 'en' ">
+               <flag iso="gb"/>
+          </span>
+          <span v-else-if="details.original_language == 'ko' ">
+              <flag iso="kr"/>
+          </span>
+          <span v-else-if="details.original_language == 'hi' ">
+              <flag iso="in"/>
+          </span>
+          <span v-else-if="details.original_language == '' ">
+              <flag iso="it"/>
+          </span>
+          <span v-else>
+               <flag :iso="details.original_language"/>
           </span>
       </div>
       <div>

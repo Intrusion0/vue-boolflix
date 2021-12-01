@@ -3,7 +3,7 @@
     <div class="container-cards">
         <!-- Componente Card -->
         <Card 
-        v-for="card, i in cards"
+        v-for="card, i in filmsAndSeries"
         :key="i"
         :details="card"
         />
@@ -20,7 +20,7 @@ export default {
       Card,
   },
   props: {
-      cards: Array,
+      filmsAndSeries: Array,
   }
 }
 </script>
