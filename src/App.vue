@@ -1,9 +1,13 @@
 <template>
   <div id="app">
     <!-- Componente Header -->
-    <Header/>
+    <Header
+    @valueText="sendTextActual"
+    />
     <!-- Componente Main -->
-    <Main/>
+    <Main
+    :searchTextActual="this.searchTextActual"
+    />
   </div>
 </template>
 
@@ -16,6 +20,17 @@ export default {
   components: {
     Header,
     Main,
+  },
+  data() {
+    return {
+      searchTextActual: '',
+    }
+  },
+  methods: {
+    sendTextActual(value) {
+      this.searchTextActual = value;
+      console.log(this.searchTextActual);
+    }
   }
 }
 </script>

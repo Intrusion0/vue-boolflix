@@ -1,15 +1,32 @@
 <template>
     <header>
         <img src="@/assets/img/netflix-logo.png" alt="logo netflix" />
-        <form>
-            <input type="text" name="Search" placeholder="Cerca film/serie">
-        </form>
+        <div>
+            <input type="text" name="Search" placeholder="Cerca film/serie" 
+            v-model="searchText"
+            @keyup.13="userText">
+        </div>
     </header>
 </template>
 
 <script>
 export default {
     name: "Header",
+    data() {
+        return {
+            searchText: '',
+        }
+    },
+    methods: {
+        userText() {
+            let searchTextActual = '';
+            
+            if (this.searchText.trim().toLowerCase() !== '') {
+                searchTextActual = this.searchText.trim().toLowerCase();
+                this.$emit('valueText', searchTextActual);
+            }
+        }
+    }
 }; 
 </script>
 
@@ -28,7 +45,7 @@ header {
         margin-left: 40px;
     }
 
-    form {
+    div {
         margin-right: 30px;
 
         input[type=text] {
