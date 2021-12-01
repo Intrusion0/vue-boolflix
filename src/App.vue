@@ -2,11 +2,11 @@
   <div id="app">
     <!-- Componente Header -->
     <Header
-    @valueText="sendTextActual"
+    @valueText="movieSearch"
     />
     <!-- Componente Main -->
     <Main
-    :searchTextActual="this.searchTextActual"
+    :cards="cards"
     />
   </div>
 </template>
@@ -14,6 +14,7 @@
 <script>
 import Header from './components/Header.vue'
 import Main from './components/Main.vue'
+import axios from 'axios'
 
 export default {
   name: 'App',
@@ -23,13 +24,25 @@ export default {
   },
   data() {
     return {
-      searchTextActual: '',
+      apiUrl: 'https://api.themoviedb.org/3/search/movie?api_key=',
+      apiKeys: 'c4d909d32f7d67d5875e76a887f02111',
+      apiLanguage: '&language=it-IT',
+      apiPage: '&page=1',
+      cards: [],
     }
   },
   methods: {
-    sendTextActual(value) {
-      this.searchTextActual = value;
-      console.log(this.searchTextActual);
+    movieSearch(value) {
+        axios
+        .get(this.apiUrl + this.apiKeys + this.apiLanguage + this.apiPage + '&query=' + value)
+        .then((result) => {
+            this.cards = result.data.results
+            console.log(this.cards);
+            console.log(value);
+        })
+        .catch((error) => {
+            console.log('Alert! ' + error);
+        })
     }
   }
 }

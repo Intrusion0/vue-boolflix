@@ -4,7 +4,7 @@
         <div>
             <input type="text" name="Search" placeholder="Cerca film/serie" 
             v-model="searchText"
-            @keyup.13="userText">
+            @keyup.13.prevent="userText">
         </div>
     </header>
 </template>
