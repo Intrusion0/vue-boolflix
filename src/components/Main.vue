@@ -30,7 +30,7 @@ export default {
 main {
     background-color: #141414;
     width: 100%;
-    height: calc(100vh - 65px);
+    height: calc(100vh - 85px);
     padding: 50px 0;
     overflow: auto;
 

@@ -1,5 +1,11 @@
 <template>
     <div class="card">
+      <div v-if="details.poster_path !== null" class="picture">
+          <img :src="urlImg + imgSize + details.poster_path" :alt="details.original_title || details.original_name">
+      </div>
+      <div v-else class="picture">
+          <img src="@/assets/img/img-card-default.png" :alt="details.original_title || details.original_name">
+      </div>
       <div>
           Titolo:
           <span>
@@ -33,7 +39,7 @@
       <div>
           Voto:
           <span>
-              {{ details.vote_average }}
+              {{ details.vote_average > 5 ? 5 : Math.round(details.vote_average) }}
           </span>
       </div>
     </div>
@@ -44,6 +50,12 @@ export default {
   name: 'Card',
   props: {
       details: Object
+  },
+  data() {
+      return {
+          urlImg: 'https://image.tmdb.org/t/p/',
+          imgSize: 'w342'
+      }
   }
 }
 </script>
@@ -57,6 +69,14 @@ export default {
     padding: 30px 15px;
     background-color: #222222;
 
+    .picture {
+        width: auto;
+
+        img {
+            width: 100%;
+        }
+    }
+
     div {
         color: white;
         font-weight: 700;
@@ -64,6 +84,13 @@ export default {
 
         span {
             font-weight: 400;
+        }
+
+        .star:before {
+            content: '\2605';
+            width: 60px;
+            height: 60px;
+            font-size: 60px;
         }
     }
 }

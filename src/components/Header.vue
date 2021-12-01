@@ -38,7 +38,7 @@ header {
     justify-content: space-between;
     background-color: #090909;
     width: 100%;
-    padding: 10px 0;
+    padding: 20px 0;
 
     img {
         height: 45px;
