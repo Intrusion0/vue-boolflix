@@ -6,7 +6,7 @@
       <div v-else class="picture">
           <img src="@/assets/img/img-card-default.png" :alt="details.original_title || details.original_name">
       </div>
-      <div>
+      <div v-if="details.title !== details.original_title || details.name !== details.original_name ">
           Titolo:
           <span>
               {{ details.title || details.name }}
@@ -39,7 +39,18 @@
       <div>
           Voto:
           <span>
-              {{ details.vote_average > 5 ? 5 : Math.round(details.vote_average) }}
+              {{ (details.vote_average > 5) ? 5 : (Math.round(details.vote_average) == 0) ? 1 : Math.round(details.vote_average) }}
+              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average) >= 0) ? 'checked' : '' "/>
+              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average) >= 2) ? 'checked' : '' "/>
+              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average) >= 3) ? 'checked' : '' "/>
+              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average) >= 4) ? 'checked' : '' "/>
+              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average) >= 5) ? 'checked' : '' "/>
+          </span>
+      </div>
+      <div v-if="details.overview !== ''">
+          Overview:
+          <span>
+              {{ details.overview }}
           </span>
       </div>
     </div>
@@ -56,6 +67,27 @@ export default {
           urlImg: 'https://image.tmdb.org/t/p/',
           imgSize: 'w342'
       }
+  },
+  methods: {
+    //   stars() {
+    //       switch (Math.round(this.details.vote_average)) {
+    //           case 1:
+    //             'checked'
+    //           break;
+    //           case 2:
+    //             'checked'
+    //           break;
+    //           case 3:
+    //             'checked'
+    //           break;
+    //           case 4:
+    //             'checked'
+    //           break;
+    //           case 5:
+    //             'checked'
+    //           break;
+    //       }
+    //   }
   }
 }
 </script>
@@ -66,24 +98,42 @@ export default {
     flex-direction: column;
     width: calc(100% / 5 - 30px);
     margin: 10px 15px;
-    padding: 30px 15px;
     background-color: #222222;
+    min-height: 478px;
+    max-height: 478px;
+    overflow: auto;
 
-    .picture {
-        width: auto;
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #000;
+    }
 
-        img {
-            width: 100%;
-        }
+    &::-webkit-scrollbar-thumb {
+        background: #4e0004;
     }
 
     div {
-        color: white;
-        font-weight: 700;
-        margin: 5px 0;
+        font-weight: 800;
+        font-size: 19px;
+        color: #afafaf;
+        display: none;
+
+        &.picture {
+            height: 100%;
+            width: auto;
+            display: block;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
 
         span {
-            font-weight: 400;
+            font-weight: 600;
+            font-size: 17px;
+            color: #fff;
         }
 
         .star:before {
@@ -93,5 +143,27 @@ export default {
             font-size: 60px;
         }
     }
+
+    &:hover div {
+        display: block;
+        margin: 5px 0;
+    }
+
+    &:hover div.picture {
+        display: none;
+    }
+
+    &:hover {
+        padding: 30px 15px;
+        border-image: linear-gradient(to bottom, #fff8f8, #4e4e4e) 1;
+        border-width: 1px;
+        border-style: solid;
+        background: #090909;
+    }
 }
+
+.checked {
+    color: yellow;
+}
+
 </style>

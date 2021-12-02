@@ -34,6 +34,16 @@ main {
     padding: 50px 0;
     overflow: auto;
 
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 5px;
+        background-color: #141414;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #4e0004;
+    }
+
     .container-cards {
         display: flex;
         flex-wrap: wrap;
