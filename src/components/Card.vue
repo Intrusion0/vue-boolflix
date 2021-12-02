@@ -69,25 +69,19 @@ export default {
       }
   },
   methods: {
-    //   stars() {
-    //       switch (Math.round(this.details.vote_average)) {
-    //           case 1:
-    //             'checked'
-    //           break;
-    //           case 2:
-    //             'checked'
-    //           break;
-    //           case 3:
-    //             'checked'
-    //           break;
-    //           case 4:
-    //             'checked'
-    //           break;
-    //           case 5:
-    //             'checked'
-    //           break;
-    //       }
-    //   }
+    // stars() {
+    //     if(Math.round(details.vote_average) >= 0) {
+    //         'checked'
+    //     } else if(Math.round(details.vote_average) >= 2) {
+    //         'checked'
+    //     } else if(Math.round(details.vote_average) >= 3) {
+    //         'checked'
+    //     } else if(Math.round(details.vote_average) >= 4) {
+    //         'checked'
+    //     } else if(Math.round(details.vote_average) >= 5) {
+    //         'checked'
+    //     }
+    // }
   }
 }
 </script>
