@@ -42,7 +42,7 @@
           </span>
       </div>
       <div>
-          <button @click="getActors" class="btn-actors">Attori</button>
+          <button @click.prevent="getActors" class="btn-actors">Attori</button>
           <span class="container-actors">
               <ul>
                   <li v-for="actor, j in actors" :key="j">
@@ -72,6 +72,7 @@ export default {
           actorsFilm: [],
           actorsSerie: [],
           actors: '',
+          btnSelected: false // da completare ==> :disabled="btnSelected" ==> :class="btnSelected == true 'classe(cursor: none)' : '' "
       }
   },
   methods: {
@@ -81,7 +82,7 @@ export default {
             .get(this.apiCredits + 'movie/' + this.details.id + '/credits' + this.apiKeys + this.apiLanguage)
             .then((result) => {
                 this.actorsFilm = result.data.cast;
-                
+                this.btnSelected = true;
                 this.actors = [];
 
                     switch (this.actorsFilm.length) {
@@ -121,7 +122,7 @@ export default {
             .get(this.apiCredits + 'tv/' + this.details.id + '/credits' + this.apiKeys + this.apiLanguage)
             .then((result) => {
                 this.actorsSerie = result.data.cast
-
+                this.btnSelected = true;
                 this.actors = [];
 
                 switch (this.actorsSerie.length) {
@@ -266,7 +267,7 @@ export default {
             font-size: 18px;
             font-weight: 800;
             color: #ffffff;
-            background-color: #4e0004;
+            background-color: #99040b;
             border: 0;
             cursor: pointer;
             margin-top: 10px;
