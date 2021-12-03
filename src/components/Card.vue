@@ -39,12 +39,12 @@
       <div>
           Voto:
           <span>
-              {{ (details.vote_average > 5) ? 5 : (Math.round(details.vote_average) == 0) ? 1 : Math.round(details.vote_average) }}
-              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average) >= 0) ? 'checked' : '' "/>
-              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average) >= 2) ? 'checked' : '' "/>
-              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average) >= 3) ? 'checked' : '' "/>
-              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average) >= 4) ? 'checked' : '' "/>
-              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average) >= 5) ? 'checked' : '' "/>
+              {{ (Math.round(details.vote_average / 2) == 0) ? 1 : Math.round(details.vote_average / 2) }}
+              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average / 2) >= 0) ? 'checked' : '' "/>
+              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average / 2) >= 2) ? 'checked' : '' "/>
+              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average / 2) >= 3) ? 'checked' : '' "/>
+              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average / 2) >= 4) ? 'checked' : '' "/>
+              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average / 2) == 5) ? 'checked' : '' "/>
           </span>
       </div>
       <div v-if="details.overview !== ''">
@@ -69,19 +69,21 @@ export default {
       }
   },
   methods: {
-    // stars() {
-    //     if(Math.round(details.vote_average) >= 0) {
-    //         'checked'
-    //     } else if(Math.round(details.vote_average) >= 2) {
-    //         'checked'
-    //     } else if(Math.round(details.vote_average) >= 3) {
-    //         'checked'
-    //     } else if(Math.round(details.vote_average) >= 4) {
-    //         'checked'
-    //     } else if(Math.round(details.vote_average) >= 5) {
-    //         'checked'
-    //     }
-    // }
+//   MILESTONE 5/6- OPZIONALE
+
+// Creare un array che contiene i generi di tutti i film ==> Get Movie List => https://developers.themoviedb.org/3/genres/get-movie-list
+
+// Creare un array che contiene i generi di tutte le serie TV ==> Get TV List =>
+// https://developers.themoviedb.org/3/genres/get-tv-list
+
+// L'array di film e di serie TV contengono l'ID dei generi, quindi come prima cosa mi creo i due array con i generi e poi vedo se sono inclusi.
+// Se sono inclusi li restituisco con il nome del genere e li stampo
+
+
+// forEach degli array che contengono i generi e vedere se includono l'ID del film o serie.
+
+// ELEMENTO(includes(genre_ids)) 
+// return NOME GENERE
   }
 }
 </script>
