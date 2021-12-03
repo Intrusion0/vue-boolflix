@@ -44,7 +44,7 @@
       <div>
           <button @click.prevent="getActors" class="btn-actors">Attori</button>
           <span class="container-actors">
-              <ul>
+              <ul v-if="visible"> <!-- Gestire il visible -->
                   <li v-for="actor, j in actors" :key="j">
                       {{ actor }}
                   </li>
@@ -60,7 +60,8 @@ import axios from 'axios'
 export default {
   name: 'Card',
   props: {
-      details: Object
+      details: Object,
+      visible: Boolean,
   },
   data() {
       return {
@@ -71,8 +72,7 @@ export default {
           apiLanguage: '&language=it-IT',
           actorsFilm: [],
           actorsSerie: [],
-          actors: '',
-          btnSelected: false // da completare ==> :disabled="btnSelected" ==> :class="btnSelected == true 'classe(cursor: none)' : '' "
+          actors: ''
       }
   },
   methods: {
@@ -82,8 +82,8 @@ export default {
             .get(this.apiCredits + 'movie/' + this.details.id + '/credits' + this.apiKeys + this.apiLanguage)
             .then((result) => {
                 this.actorsFilm = result.data.cast;
-                this.btnSelected = true;
                 this.actors = [];
+                this.visible = true;
 
                     switch (this.actorsFilm.length) {
                         case 0:
@@ -122,8 +122,8 @@ export default {
             .get(this.apiCredits + 'tv/' + this.details.id + '/credits' + this.apiKeys + this.apiLanguage)
             .then((result) => {
                 this.actorsSerie = result.data.cast
-                this.btnSelected = true;
                 this.actors = [];
+                this.visible = true;
 
                 switch (this.actorsSerie.length) {
                     case 0:

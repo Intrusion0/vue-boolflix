@@ -8,6 +8,7 @@
     <!-- Componente Main -->
     <Main
     :filmsAndSeries="getAllRes"
+    :actorVisible="visible"
     />
   </div>
 </template>
@@ -30,7 +31,8 @@ export default {
       apiLanguage: '&language=it-IT',
       apiPage: '&page=1', // potrei gestire le pagine! ogni pagina contiene solo 20 cards. Siccome di default è 1, in pagina visualizzerò massimo 20 cards
       films: [],
-      series: []
+      series: [],
+      visible: true,
     }
   },
   computed: {
@@ -44,6 +46,7 @@ export default {
         .get(this.apiUrl + 'movie' + this.apiKeys + this.apiLanguage + this.apiPage + '&query=' + nameFilm)
         .then((result) => {
             this.films = result.data.results
+            this.visible = false;
             console.log(this.films);
             console.log(nameFilm);
         })
@@ -56,6 +59,7 @@ export default {
         .get(this.apiUrl + 'tv' + this.apiKeys + this.apiLanguage + this.apiPage + '&query=' + nameSerie)
         .then((result) => {
             this.series = result.data.results
+            this.visible = false;
             console.log(this.series);
             console.log(nameSerie);
         })

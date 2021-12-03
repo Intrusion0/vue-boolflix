@@ -6,6 +6,7 @@
         v-for="card, i in filmsAndSeries"
         :key="i"
         :details="card"
+        :visible="actorVisible"
         />
     </div>
   </main>
@@ -21,6 +22,7 @@ export default {
   },
   props: {
       filmsAndSeries: Array,
+      actorVisible: Boolean,
   }
 }
 </script>
