@@ -20,31 +20,19 @@
       </div>
       <div>
           Lingua:
-          <span v-if="details.original_language == 'en' ">
-               <flag iso="gb"/>
-          </span>
-          <span v-else-if="details.original_language == 'ko' ">
-              <flag iso="kr"/>
-          </span>
-          <span v-else-if="details.original_language == 'hi' ">
-              <flag iso="in"/>
-          </span>
-          <span v-else-if="details.original_language == '' ">
-              <flag iso="it"/>
-          </span>
-          <span v-else>
-               <flag :iso="details.original_language"/>
+          <span>
+               <flag :iso="getFlags()"/>
           </span>
       </div>
       <div>
           Voto:
           <span>
               {{ (Math.round(details.vote_average / 2) == 0) ? 1 : Math.round(details.vote_average / 2) }}
-              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average / 2) >= 0) ? 'checked' : '' "/>
-              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average / 2) >= 2) ? 'checked' : '' "/>
-              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average / 2) >= 3) ? 'checked' : '' "/>
-              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average / 2) >= 4) ? 'checked' : '' "/>
-              <font-awesome-icon icon="star" :class="(Math.round(details.vote_average / 2) == 5) ? 'checked' : '' "/>
+              <font-awesome-icon icon="star" :class="firstStar(details.vote_average)"/>
+              <font-awesome-icon icon="star" :class="secondStar(details.vote_average)"/>
+              <font-awesome-icon icon="star" :class="thirdStar(details.vote_average)"/>
+              <font-awesome-icon icon="star" :class="fourthStar(details.vote_average)"/>
+              <font-awesome-icon icon="star" :class="fifthStar(details.vote_average)"/>
           </span>
       </div>
       <div v-if="details.overview !== ''">
@@ -57,7 +45,7 @@
           <button @click="getActors" class="btn-actors">Attori</button>
           <span class="container-actors">
               <ul>
-                  <li v-for="actor, i in actors" :key="i">
+                  <li v-for="actor, j in actors" :key="j">
                       {{ actor }}
                   </li>
               </ul>
@@ -169,6 +157,66 @@ export default {
                 console.log('Alert! ' + error);
             })
           }
+      },
+      getFlags() {
+          let countryFlag = '';
+
+          switch (this.details.original_language) {
+              case 'en':
+                  countryFlag = 'gb'
+                break;
+              case 'ko':
+                countryFlag = 'kr'
+                break;
+              case 'hi':
+                countryFlag = 'in'
+                break;
+              case 'ja':
+                countryFlag = 'cn'
+                break;
+              case '':
+                countryFlag = 'gb'
+                break;
+              default:
+                countryFlag = this.details.original_language;
+                break;
+          }
+          return countryFlag
+      },
+      firstStar(value) {
+        if (Math.round(value / 2) >= 0) {
+            return 'checked'
+        } else {
+            return ''
+        }
+      },
+      secondStar(value) {
+        if (Math.round(value / 2) >= 2) {
+            return 'checked'
+        } else {
+            return ''
+        }
+      },
+      thirdStar(value) {
+        if (Math.round(value / 2) >= 3) {
+            return 'checked'
+        } else {
+            return ''
+        }
+      },
+      fourthStar(value) {
+        if (Math.round(value / 2) >= 4) {
+            return 'checked'
+        } else {
+            return ''
+        }
+      },
+      fifthStar(value) {
+        if (Math.round(value / 2) >= 5) {
+            return 'checked'
+        } else {
+            return ''
+        }
       }
   }
 }
@@ -221,6 +269,7 @@ export default {
             background-color: #4e0004;
             border: 0;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         span {
@@ -233,6 +282,11 @@ export default {
                 flex-direction: column;
                 margin: 10px 0;
                 line-height: 30px;
+
+                ul {
+                    list-style: circle;
+                    margin-left: 20px;
+                }
             }
         }
 
