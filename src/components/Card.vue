@@ -56,7 +56,7 @@
       <div>
           <button @click="getActors">Attori</button>
           <span class="actors">
-
+              test
           </span>
       </div>
     </div>
@@ -78,7 +78,9 @@ export default {
           apiKeys: '?api_key=c4d909d32f7d67d5875e76a887f02111',
           apiLanguage: '&language=it-IT',
           actorsFilm: [],
-          actorsSerie: []
+          actorsSerie: [],
+          contActors: document.querySelector('.actors'),
+          test: [],
       }
   },
   methods: {
@@ -89,51 +91,51 @@ export default {
             .then((result) => {
                 this.actorsFilm = result.data.cast;
                 
-                let contActorFilm = document.querySelector('.actors');
                 let fiveActorFIlm = [];
+                this.contActors.innerHTML = '';
 
                     switch (this.actorsFilm.length) {
                         case 0:
                             fiveActorFIlm = 'Nessun attore presente';
-                            contActorFilm.innerHTML = fiveActorFIlm;
+                            this.contActors.innerHTML = fiveActorFIlm;
                             break;
                         case 1:
                             fiveActorFIlm = this.actorsFilm[0].name;
-                            contActorFilm.innerHTML = fiveActorFIlm;
+                            this.contActors.innerHTML = fiveActorFIlm;
                             break;
                         case 2:
                             fiveActorFIlm = this.actorsFilm[0].name;
-                            fiveActorFIlm += this.actorsFilm[1].name;
-                            contActorFilm.innerHTML = fiveActorFIlm;
+                            fiveActorFIlm += ' ' + this.actorsFilm[1].name;
+                            this.contActors.innerHTML = fiveActorFIlm;
                             break;
                         case 3:
                             fiveActorFIlm = this.actorsFilm[0].name;
-                            fiveActorFIlm += this.actorsFilm[1].name;
-                            fiveActorFIlm += this.actorsFilm[2].name;
-                            contActorFilm.innerHTML = fiveActorFIlm;
+                            fiveActorFIlm += ' ' + this.actorsFilm[1].name;
+                            fiveActorFIlm += ' ' + this.actorsFilm[2].name;
+                            this.contActors.innerHTML = fiveActorFIlm;
                             break;
                         case 4:
                             fiveActorFIlm = this.actorsFilm[0].name;
-                            fiveActorFIlm += this.actorsFilm[1].name;
-                            fiveActorFIlm += this.actorsFilm[2].name;
-                            fiveActorFIlm += this.actorsFilm[3].name;
-                            contActorFilm.innerHTML = fiveActorFIlm;
+                            fiveActorFIlm += ' ' + this.actorsFilm[1].name;
+                            fiveActorFIlm += ' ' + this.actorsFilm[2].name;
+                            fiveActorFIlm += ' ' + this.actorsFilm[3].name;
+                            this.contActors.innerHTML = fiveActorFIlm;
                             break;
                         case 5:
                             fiveActorFIlm = this.actorsFilm[0].name;
-                            fiveActorFIlm += this.actorsFilm[1].name;
-                            fiveActorFIlm += this.actorsFilm[2].name;
-                            fiveActorFIlm += this.actorsFilm[3].name;
-                            fiveActorFIlm += this.actorsFilm[4].name;
-                            contActorFilm.innerHTML = fiveActorFIlm;
+                            fiveActorFIlm += ' ' + this.actorsFilm[1].name;
+                            fiveActorFIlm += ' ' + this.actorsFilm[2].name;
+                            fiveActorFIlm += ' ' + this.actorsFilm[3].name;
+                            fiveActorFIlm += ' ' + this.actorsFilm[4].name;
+                            this.contActors.innerHTML = fiveActorFIlm;
                             break;
                         default:
                             fiveActorFIlm = this.actorsFilm[0].name;
-                            fiveActorFIlm += this.actorsFilm[1].name;
-                            fiveActorFIlm += this.actorsFilm[2].name;
-                            fiveActorFIlm += this.actorsFilm[3].name;
-                            fiveActorFIlm += this.actorsFilm[4].name;
-                            contActorFilm.innerHTML = fiveActorFIlm;
+                            fiveActorFIlm += ' ' + this.actorsFilm[1].name;
+                            fiveActorFIlm += ' ' + this.actorsFilm[2].name;
+                            fiveActorFIlm += ' ' + this.actorsFilm[3].name;
+                            fiveActorFIlm += ' ' + this.actorsFilm[4].name;
+                            this.contActors.innerHTML = fiveActorFIlm;
                             break;
                     }
                 
@@ -152,51 +154,51 @@ export default {
             .then((result) => {
                 this.actorsSerie = result.data.cast
 
-                let contActorSerie = document.querySelector('.actors');
                 let fiveActorSerie = [];
+                this.contActors.innerHTML = '';
 
                 switch (this.actorsSerie.length) {
                     case 0:
                         fiveActorSerie = 'Nessun attore presente';
-                        contActorSerie.innerHTML = fiveActorSerie;
+                        this.contActors.innerHTML = fiveActorSerie;
                         break;
                     case 1:
                         fiveActorSerie = this.actorsSerie[0].name;
-                        contActorSerie.innerHTML = fiveActorSerie;
+                        this.contActors.innerHTML = fiveActorSerie;
                         break;
                     case 2:
                         fiveActorSerie = this.actorsSerie[0].name;
-                        fiveActorSerie += this.actorsSerie[1].name;
-                        contActorSerie.innerHTML = fiveActorSerie;
+                        fiveActorSerie += ' ' + this.actorsSerie[1].name;
+                        this.contActors.innerHTML = fiveActorSerie;
                         break;
                     case 3:
                         fiveActorSerie = this.actorsSerie[0].name;
-                        fiveActorSerie += this.actorsSerie[1].name;
-                        fiveActorSerie += this.actorsSerie[2].name;
-                        contActorSerie.innerHTML = fiveActorSerie;
+                        fiveActorSerie += ' ' + this.actorsSerie[1].name;
+                        fiveActorSerie += ' ' + this.actorsSerie[2].name;
+                        this.contActors.innerHTML = fiveActorSerie;
                         break;
                     case 4:
                         fiveActorSerie = this.actorsSerie[0].name;
-                        fiveActorSerie += this.actorsSerie[1].name;
-                        fiveActorSerie += this.actorsSerie[2].name;
-                        fiveActorSerie += this.actorsSerie[3].name;
-                        contActorSerie.innerHTML = fiveActorSerie;
+                        fiveActorSerie += ' ' + this.actorsSerie[1].name;
+                        fiveActorSerie += ' ' + this.actorsSerie[2].name;
+                        fiveActorSerie += ' ' + this.actorsSerie[3].name;
+                        this.contActors.innerHTML = fiveActorSerie;
                         break;
                     case 5:
                         fiveActorSerie = this.actorsSerie[0].name;
-                        fiveActorSerie += this.actorsSerie[1].name;
-                        fiveActorSerie += this.actorsSerie[2].name;
-                        fiveActorSerie += this.actorsSerie[3].name;
-                        fiveActorSerie += this.actorsSerie[4].name;
-                        contActorSerie.innerHTML = fiveActorSerie;
+                        fiveActorSerie += ' ' + this.actorsSerie[1].name;
+                        fiveActorSerie += ' ' + this.actorsSerie[2].name;
+                        fiveActorSerie += ' ' + this.actorsSerie[3].name;
+                        fiveActorSerie += ' ' + this.actorsSerie[4].name;
+                        this.contActors.innerHTML = fiveActorSerie;
                         break;
                     default:
                         fiveActorSerie = this.actorsSerie[0].name;
-                        fiveActorSerie += this.actorsSerie[1].name;
-                        fiveActorSerie += this.actorsSerie[2].name;
-                        fiveActorSerie += this.actorsSerie[3].name;
-                        fiveActorSerie += this.actorsSerie[4].name;
-                        contActorSerie = fiveActorSerie;
+                        fiveActorSerie += ' ' + this.actorsSerie[1].name;
+                        fiveActorSerie += ' ' + this.actorsSerie[2].name;
+                        fiveActorSerie += ' ' + this.actorsSerie[3].name;
+                        fiveActorSerie += ' ' + this.actorsSerie[4].name;
+                        this.contActors.innerHTML = fiveActorSerie;
                         break;
                 }
 
