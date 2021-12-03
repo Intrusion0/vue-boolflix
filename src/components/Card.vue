@@ -53,10 +53,18 @@
               {{ details.overview }}
           </span>
       </div>
+      <div>
+          <button @click="getActors">Attori</button>
+          <span class="actors">
+
+          </span>
+      </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Card',
   props: {
@@ -65,25 +73,144 @@ export default {
   data() {
       return {
           urlImg: 'https://image.tmdb.org/t/p/',
-          imgSize: 'w342'
+          imgSize: 'w342',
+          apiCredits: 'https://api.themoviedb.org/3/',
+          apiKeys: '?api_key=c4d909d32f7d67d5875e76a887f02111',
+          apiLanguage: '&language=it-IT',
+          actorsFilm: [],
+          actorsSerie: []
       }
   },
   methods: {
-//   MILESTONE 5/6- OPZIONALE
+      getActors() {
+          if (this.details.original_title) {
+            axios // RICHIESTA PER GENERARE SOLO I PRIMI 5 ATTORI DEI FILM
+            .get(this.apiCredits + 'movie/' + this.details.id + '/credits' + this.apiKeys + this.apiLanguage)
+            .then((result) => {
+                this.actorsFilm = result.data.cast;
+                
+                let contActorFilm = document.querySelector('.actors');
+                let fiveActorFIlm = [];
 
-// Creare un array che contiene i generi di tutti i film ==> Get Movie List => https://developers.themoviedb.org/3/genres/get-movie-list
+                    switch (this.actorsFilm.length) {
+                        case 0:
+                            fiveActorFIlm = 'Nessun attore presente';
+                            contActorFilm.innerHTML = fiveActorFIlm;
+                            break;
+                        case 1:
+                            fiveActorFIlm = this.actorsFilm[0].name;
+                            contActorFilm.innerHTML = fiveActorFIlm;
+                            break;
+                        case 2:
+                            fiveActorFIlm = this.actorsFilm[0].name;
+                            fiveActorFIlm += this.actorsFilm[1].name;
+                            contActorFilm.innerHTML = fiveActorFIlm;
+                            break;
+                        case 3:
+                            fiveActorFIlm = this.actorsFilm[0].name;
+                            fiveActorFIlm += this.actorsFilm[1].name;
+                            fiveActorFIlm += this.actorsFilm[2].name;
+                            contActorFilm.innerHTML = fiveActorFIlm;
+                            break;
+                        case 4:
+                            fiveActorFIlm = this.actorsFilm[0].name;
+                            fiveActorFIlm += this.actorsFilm[1].name;
+                            fiveActorFIlm += this.actorsFilm[2].name;
+                            fiveActorFIlm += this.actorsFilm[3].name;
+                            contActorFilm.innerHTML = fiveActorFIlm;
+                            break;
+                        case 5:
+                            fiveActorFIlm = this.actorsFilm[0].name;
+                            fiveActorFIlm += this.actorsFilm[1].name;
+                            fiveActorFIlm += this.actorsFilm[2].name;
+                            fiveActorFIlm += this.actorsFilm[3].name;
+                            fiveActorFIlm += this.actorsFilm[4].name;
+                            contActorFilm.innerHTML = fiveActorFIlm;
+                            break;
+                        default:
+                            fiveActorFIlm = this.actorsFilm[0].name;
+                            fiveActorFIlm += this.actorsFilm[1].name;
+                            fiveActorFIlm += this.actorsFilm[2].name;
+                            fiveActorFIlm += this.actorsFilm[3].name;
+                            fiveActorFIlm += this.actorsFilm[4].name;
+                            contActorFilm.innerHTML = fiveActorFIlm;
+                            break;
+                    }
+                
+                console.log(fiveActorFIlm);
+                console.log(this.actorsFilm);
+        
+                this.actorsFilm = [];
+                fiveActorFIlm = [];
+            })
+            .catch((error) => {
+                console.log('Alert! ' + error);
+            })
+          } else if (this.details.original_name) {
+            axios // RICHIESTA PER GENERARE SOLO I PRIMI 5 ATTORI DELLE SERIE TV
+            .get(this.apiCredits + 'tv/' + this.details.id + '/credits' + this.apiKeys + this.apiLanguage)
+            .then((result) => {
+                this.actorsSerie = result.data.cast
 
-// Creare un array che contiene i generi di tutte le serie TV ==> Get TV List =>
-// https://developers.themoviedb.org/3/genres/get-tv-list
+                let contActorSerie = document.querySelector('.actors');
+                let fiveActorSerie = [];
 
-// L'array di film e di serie TV contengono l'ID dei generi, quindi come prima cosa mi creo i due array con i generi e poi vedo se sono inclusi.
-// Se sono inclusi li restituisco con il nome del genere e li stampo
+                switch (this.actorsSerie.length) {
+                    case 0:
+                        fiveActorSerie = 'Nessun attore presente';
+                        contActorSerie.innerHTML = fiveActorSerie;
+                        break;
+                    case 1:
+                        fiveActorSerie = this.actorsSerie[0].name;
+                        contActorSerie.innerHTML = fiveActorSerie;
+                        break;
+                    case 2:
+                        fiveActorSerie = this.actorsSerie[0].name;
+                        fiveActorSerie += this.actorsSerie[1].name;
+                        contActorSerie.innerHTML = fiveActorSerie;
+                        break;
+                    case 3:
+                        fiveActorSerie = this.actorsSerie[0].name;
+                        fiveActorSerie += this.actorsSerie[1].name;
+                        fiveActorSerie += this.actorsSerie[2].name;
+                        contActorSerie.innerHTML = fiveActorSerie;
+                        break;
+                    case 4:
+                        fiveActorSerie = this.actorsSerie[0].name;
+                        fiveActorSerie += this.actorsSerie[1].name;
+                        fiveActorSerie += this.actorsSerie[2].name;
+                        fiveActorSerie += this.actorsSerie[3].name;
+                        contActorSerie.innerHTML = fiveActorSerie;
+                        break;
+                    case 5:
+                        fiveActorSerie = this.actorsSerie[0].name;
+                        fiveActorSerie += this.actorsSerie[1].name;
+                        fiveActorSerie += this.actorsSerie[2].name;
+                        fiveActorSerie += this.actorsSerie[3].name;
+                        fiveActorSerie += this.actorsSerie[4].name;
+                        contActorSerie.innerHTML = fiveActorSerie;
+                        break;
+                    default:
+                        fiveActorSerie = this.actorsSerie[0].name;
+                        fiveActorSerie += this.actorsSerie[1].name;
+                        fiveActorSerie += this.actorsSerie[2].name;
+                        fiveActorSerie += this.actorsSerie[3].name;
+                        fiveActorSerie += this.actorsSerie[4].name;
+                        contActorSerie = fiveActorSerie;
+                        break;
+                }
 
+                console.log(fiveActorSerie);
+                console.log(this.actorsSerie);
 
-// forEach degli array che contengono i generi e vedere se includono l'ID del film o serie.
-
-// ELEMENTO(includes(genre_ids)) 
-// return NOME GENERE
+                this.actorsSerie = [];
+                fiveActorSerie = [];
+            })
+            .catch((error) => {
+                console.log('Alert! ' + error);
+            })
+          }
+      }
   }
 }
 </script>
