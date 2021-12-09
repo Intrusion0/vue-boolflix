@@ -8,7 +8,8 @@
     <!-- Componente Main -->
     <Main
     :filmsAndSeries="getAllRes"
-    :actorVisible="visible"
+    :actorVisible="actorsVisible"
+    :genreVisible="genresVisible"
     :allGenres="getAllGenres"
     />
   </div>
@@ -35,7 +36,8 @@ export default {
       series: [],
       filmsGenres: [],
       serieGenres: [],
-      visible: true,
+      actorsVisible: true,
+      genresVisible: true,
     }
   },
   created() {
@@ -56,7 +58,8 @@ export default {
         .get(this.apiUrl + 'search/' + 'movie' + this.apiKeys + this.apiLanguage + this.apiPage + '&query=' + nameFilm)
         .then((result) => {
             this.films = result.data.results
-            this.visible = false;
+            this.actorsVisible = false;
+            this.genresVisible = false;
             console.log(this.films);
             console.log(nameFilm);
         })
@@ -69,7 +72,8 @@ export default {
         .get(this.apiUrl + 'search/' + 'tv' + this.apiKeys + this.apiLanguage + this.apiPage + '&query=' + nameSerie)
         .then((result) => {
             this.series = result.data.results
-            this.visible = false;
+            this.actorsVisible = false;
+            this.genresVisible = false;
             console.log(this.series);
             console.log(nameSerie);
         })

@@ -43,7 +43,7 @@
       </div>
       <div>
           <button @click.prevent="getActors" class="btn-actors-genres">Attori</button>
-          <span v-if="visible" class="container-actors">
+          <span v-if="visibleActors" class="container-actors-genres">
               <ul>
                   <li v-for="actor, j in actors" :key="j">
                       {{ actor }}
@@ -53,9 +53,12 @@
       </div>
       <div>
           <button @click.prevent="getGenres" class="btn-actors-genres" >Generi</button>
-          <span>
+          <span v-if="visibleGenres" class="container-actors-genres">
               <ul>
-                  <li v-for="genre, a in genresCard" :key="a">
+                  <li v-if="genresCard.length === 0">
+                      Nessun genere presente!
+                  </li>
+                  <li v-else v-for="genre, a in genresCardUnique" :key="a">
                       {{ genre }}
                   </li>
               </ul>
@@ -71,7 +74,8 @@ export default {
   name: 'Card',
   props: {
       details: Object,
-      visible: Boolean,
+      visibleActors: Boolean,
+      visibleGenres: Boolean,
       genres: Array,
   },
   data() {
@@ -84,7 +88,9 @@ export default {
           actorsFilm: [],
           actorsSerie: [],
           actors: '',
+          allGenresUnique: [],
           genresCard: [],
+          genresCardUnique: [],
       }
   },
   methods: {
@@ -95,7 +101,7 @@ export default {
             .then((result) => {
                 this.actorsFilm = result.data.cast;
                 this.actors = [];
-                this.visible = true;
+                this.visibleActors = true;
 
                     switch (this.actorsFilm.length) {
                         case 0:
@@ -135,7 +141,7 @@ export default {
             .then((result) => {
                 this.actorsSerie = result.data.cast
                 this.actors = [];
-                this.visible = true;
+                this.visibleActors = true;
 
                 switch (this.actorsSerie.length) {
                     case 0:
@@ -233,22 +239,24 @@ export default {
       },
       getGenres() {
         
-        this.genresCard = [];
+        this.allGenresUnique = [];
+        this.visibleGenres = true;
 
           this.genres.forEach(element => {
-              this.genresCard.push(element.id);
+              if (this.allGenresUnique.indexOf(element.id) === -1) {
+                  this.allGenresUnique.push(element);
+              }
           });
 
-          console.log(this.genresCard);
-          console.log(this.details.genre_ids);
-          
-          for(let i = 0; i < this.genresCard.length; i++) {
-              if (this.genresCard.includes(this.details.genre_ids)) {
-                  console.log(this.genresCard.includes(this.details.genre_ids));
-              } else {
-                  console.log('Testttt');
-              }
-          }
+          console.log('Tutti i generi: ', this.allGenresUnique);
+          console.log('Genere/i film/serie: ', this.details.genre_ids);
+
+        this.genresCard = this.allGenresUnique.filter(value => this.details.genre_ids.includes(value.id))
+
+        const map = new Map(this.genresCard.map(value => [value.id, value.name, value]));
+        this.genresCardUnique = [...map.values()];
+
+        console.log('Generi card: ', this.genresCardUnique);
       }
   }
 }
@@ -309,7 +317,7 @@ export default {
             font-size: 17px;
             color: #fff;
 
-            &.container-actors {
+            &.container-actors-genres {
                 display: flex;
                 flex-direction: column;
                 margin: 10px 0;

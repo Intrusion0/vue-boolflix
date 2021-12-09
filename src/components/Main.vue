@@ -6,7 +6,8 @@
         v-for="card, i in filmsAndSeries"
         :key="i"
         :details="card"
-        :visible="actorVisible"
+        :visibleActors="actorVisible"
+        :visibleGenres="genreVisible"
         :genres="allGenres"
         />
     </div>
@@ -25,6 +26,7 @@ export default {
       filmsAndSeries: Array,
       allGenres: Array,
       actorVisible: Boolean,
+      genreVisible: Boolean,
   }
 }
 </script>
