@@ -7,6 +7,7 @@
         :key="i"
         :details="card"
         :visible="actorVisible"
+        :genres="allGenres"
         />
     </div>
   </main>
@@ -22,6 +23,7 @@ export default {
   },
   props: {
       filmsAndSeries: Array,
+      allGenres: Array,
       actorVisible: Boolean,
   }
 }

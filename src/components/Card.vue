@@ -42,11 +42,21 @@
           </span>
       </div>
       <div>
-          <button @click.prevent="getActors" class="btn-actors">Attori</button>
-          <span class="container-actors">
-              <ul v-if="visible"> <!-- Gestire il visible -->
+          <button @click.prevent="getActors" class="btn-actors-genres">Attori</button>
+          <span v-if="visible" class="container-actors">
+              <ul>
                   <li v-for="actor, j in actors" :key="j">
                       {{ actor }}
+                  </li>
+              </ul>
+          </span>
+      </div>
+      <div>
+          <button @click.prevent="getGenres" class="btn-actors-genres" >Generi</button>
+          <span>
+              <ul>
+                  <li v-for="genre, a in genresCard" :key="a">
+                      {{ genre }}
                   </li>
               </ul>
           </span>
@@ -62,6 +72,7 @@ export default {
   props: {
       details: Object,
       visible: Boolean,
+      genres: Array,
   },
   data() {
       return {
@@ -72,7 +83,8 @@ export default {
           apiLanguage: '&language=it-IT',
           actorsFilm: [],
           actorsSerie: [],
-          actors: ''
+          actors: '',
+          genresCard: [],
       }
   },
   methods: {
@@ -218,6 +230,25 @@ export default {
         } else {
             return ''
         }
+      },
+      getGenres() {
+        
+        this.genresCard = [];
+
+          this.genres.forEach(element => {
+              this.genresCard.push(element.id);
+          });
+
+          console.log(this.genresCard);
+          console.log(this.details.genre_ids);
+          
+          for(let i = 0; i < this.genresCard.length; i++) {
+              if (this.genresCard.includes(this.details.genre_ids)) {
+                  console.log(this.genresCard.includes(this.details.genre_ids));
+              } else {
+                  console.log('Testttt');
+              }
+          }
       }
   }
 }
@@ -261,7 +292,7 @@ export default {
             }
         }
 
-        .btn-actors {
+        .btn-actors-genres {
             height: 35px;
             width: 75px;
             font-size: 18px;
