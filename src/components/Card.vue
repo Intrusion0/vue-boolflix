@@ -54,11 +54,14 @@
       <div>
           <button @click.prevent="getGenres" class="btn-actors-genres" >Generi</button>
           <span v-if="visibleGenres" class="container-actors-genres">
-              <ul>
+              <ul class="list-genres">
                   <li v-if="genresCard.length === 0">
                       Nessun genere presente!
                   </li>
                   <li v-else v-for="genre, a in genresCardUnique" :key="a">
+                      <span class="container-genres">
+                          Genere {{ ++a }}:
+                      </span>
                       {{ genre }}
                   </li>
               </ul>
@@ -88,7 +91,6 @@ export default {
           actorsFilm: [],
           actorsSerie: [],
           actors: '',
-          allGenresUnique: [],
           genresCard: [],
           genresCardUnique: [],
       }
@@ -239,19 +241,17 @@ export default {
       },
       getGenres() {
         
-        this.allGenresUnique = [];
+        this.allGenre = [];
         this.visibleGenres = true;
 
           this.genres.forEach(element => {
-              if (this.allGenresUnique.indexOf(element.id) === -1) {
-                  this.allGenresUnique.push(element);
-              }
+              this.allGenre.push(element);
           });
 
-          console.log('Tutti i generi: ', this.allGenresUnique);
-          console.log('Genere/i film/serie: ', this.details.genre_ids);
+          console.log('Tutti i generi: ', this.allGenre);
+          console.log('Id genere card: ', this.details.genre_ids);
 
-        this.genresCard = this.allGenresUnique.filter(value => this.details.genre_ids.includes(value.id))
+        this.genresCard = this.allGenre.filter(value => this.details.genre_ids.includes(value.id))
 
         const map = new Map(this.genresCard.map(value => [value.id, value.name, value]));
         this.genresCardUnique = [...map.values()];
@@ -326,6 +326,17 @@ export default {
                 ul {
                     list-style: circle;
                     margin-left: 20px;
+                }
+
+                .list-genres {
+                    list-style: none;
+                    margin: 0;
+
+                    .container-genres {
+                        color:#afafaf;
+                        font-size: 19px;
+                        margin-right: 5px;
+                    }
                 }
             }
         }
