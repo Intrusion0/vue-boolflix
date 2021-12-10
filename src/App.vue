@@ -58,8 +58,18 @@ export default {
         .get(this.apiUrl + 'search/' + 'movie' + this.apiKeys + this.apiLanguage + this.apiPage + '&query=' + nameFilm)
         .then((result) => {
             this.films = result.data.results
-            this.actorsVisible = false;
-            this.genresVisible = false;
+
+            if (this.actorsVisible == true) { // Ad ogni ricerca, il valore cambia, quindi se prima è false, alla prossima ricerca diventa true, e così via
+              this.actorsVisible = false;
+            } else if (this.actorsVisible == false) {
+              this.actorsVisible = true;
+            }
+
+            if (this.genresVisible == true) { // stesso procedimento di sopra
+              this.genresVisible = false;
+            } else if (this.genresVisible == false) {
+              this.genresVisible = true;
+            }
             console.log(this.films);
             console.log(nameFilm);
         })
@@ -72,8 +82,19 @@ export default {
         .get(this.apiUrl + 'search/' + 'tv' + this.apiKeys + this.apiLanguage + this.apiPage + '&query=' + nameSerie)
         .then((result) => {
             this.series = result.data.results
-            this.actorsVisible = false;
-            this.genresVisible = false;
+
+            if (this.actorsVisible == true) {
+              this.actorsVisible = false;
+            } else if (this.actorsVisible == false) {
+              this.actorsVisible = true;
+            }
+
+            if (this.genresVisible == true) {
+              this.genresVisible = false;
+            } else if (this.genresVisible == false) {
+              this.genresVisible = true;
+            }
+
             console.log(this.series);
             console.log(nameSerie);
         })

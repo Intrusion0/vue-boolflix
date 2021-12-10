@@ -43,7 +43,7 @@
       </div>
       <div>
           <button @click.prevent="getActors" class="btn-actors-genres">Attori</button>
-          <span v-if="visibleActors" class="container-actors-genres">
+          <span v-if="visibleA" class="container-actors-genres">
               <ul>
                   <li v-for="actor, j in actors" :key="j">
                       {{ actor }}
@@ -53,9 +53,9 @@
       </div>
       <div>
           <button @click.prevent="getGenres" class="btn-actors-genres" >Generi</button>
-          <span v-if="visibleGenres" class="container-actors-genres">
+          <span v-if="visibleG" class="container-actors-genres">
               <ul class="list-genres">
-                  <li v-if="genresCard.length === 0">
+                  <li v-if="genresCardUnique.length === 0">
                       Nessun genere presente!
                   </li>
                   <li v-else v-for="genre, a in genresCardUnique" :key="a">
@@ -77,8 +77,12 @@ export default {
   name: 'Card',
   props: {
       details: Object,
-      visibleActors: Boolean,
-      visibleGenres: Boolean,
+      visibleActors: {
+          type: Boolean
+      },
+      visibleGenres: {
+          type: Boolean
+      },
       genres: Array,
   },
   data() {
@@ -93,7 +97,25 @@ export default {
           actors: '',
           genresCard: [],
           genresCardUnique: [],
+          visibleG: false,
+          visibleA: false
       }
+  },
+  watch: {
+    visibleGenres: {
+        handler() {
+            this.visibleG = false;
+            console.log('Eccomi, sono il watch di visible Genres');
+        },
+        immediate: true
+    },
+    visibleActors: {
+        handler() {
+            this.visibleA = false;
+            console.log('Eccomi, sono il watch di visible Actors');
+        },
+        immediate: true
+    }
   },
   methods: {
       getActors() {
@@ -103,7 +125,7 @@ export default {
             .then((result) => {
                 this.actorsFilm = result.data.cast;
                 this.actors = [];
-                this.visibleActors = true;
+                this.visibleA = true;
 
                     switch (this.actorsFilm.length) {
                         case 0:
@@ -143,7 +165,7 @@ export default {
             .then((result) => {
                 this.actorsSerie = result.data.cast
                 this.actors = [];
-                this.visibleActors = true;
+                this.visibleA = true;
 
                 switch (this.actorsSerie.length) {
                     case 0:
@@ -242,7 +264,7 @@ export default {
       getGenres() {
         
         this.allGenre = [];
-        this.visibleGenres = true;
+        this.visibleG = true;
 
           this.genres.forEach(element => {
               this.allGenre.push(element);
@@ -257,7 +279,7 @@ export default {
         this.genresCardUnique = [...map.values()];
 
         console.log('Generi card: ', this.genresCardUnique);
-      }
+      },
   }
 }
 </script>
